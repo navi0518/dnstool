@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Map Tool</title>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body class="container">
+    <h1>DNS Map Tool</h1>
+    <form id="dnsMapForm">
+        <label for="domain">Enter domain:</label>
+        <input type="text" id="domain" name="domain" placeholder="example.com">
+        <button type="submit">Get DNS Map</button>
+    </form>
+    <div id="dnsMapResult"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/index.js"></script>
+</body>
+</html>
