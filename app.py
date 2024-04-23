@@ -7,10 +7,22 @@ app = Flask(__name__)
 def get_dns_map(domain):
     dns_records = {}
     resolver = dns.resolver.Resolver()
-    answer = resolver.resolve(domain, 'ANY')
-    for rdata in answer:
-        record_type = str(rdata.rdtype)
-        dns_records.setdefault(record_type, []).append(str(rdata))
+    try:
+        # List of common DNS record types
+        record_types = ['A', 'AAAA', 'CNAME', 'MX', 'NS', 'TXT']
+        
+        for record_type in record_types:
+            answer = resolver.resolve(domain, record_type)
+            dns_records[record_type] = [str(rdata) for rdata in answer]
+
+    except dns.resolver.NXDOMAIN:
+        raise ValueError("Domain not found")
+    except dns.resolver.NoAnswer:
+        # No DNS records found, return an empty dictionary
+        return dns_records
+    except Exception as e:
+        raise e
+
     return dns_records
 
 @app.route("/")
